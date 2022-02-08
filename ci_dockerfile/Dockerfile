@@ -8,7 +8,9 @@ RUN apt-get install -y curl
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV TOKEN=${TOKEN}
+ARG TOKEN
+
+ENV TOKEN=$TOKEN
 
 RUN apt-get update && \
     apt-get install -yq tzdata && \

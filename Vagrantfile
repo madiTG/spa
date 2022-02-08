@@ -35,13 +35,13 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  puts buildParameter
   if buildParameter == 'true'
       config.vm.provider "docker" do |d|
 #    d.image = "nginx:latest"
 #    d.ports = ["8081:80"]
 #    d.name = "nginx-container"
          d.build_dir = "ci_dockerfile"
+         d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
       end
   end
 
