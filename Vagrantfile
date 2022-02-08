@@ -37,14 +37,6 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   if buildParameter == 'true'
-#      config.vm.provider "docker" do |d|
-#         d.remains_running = false
-#    d.image = "nginx:latest"
-#    d.ports = ["8081:80"]
-#    d.name = "nginx-container"
-#         d.build_dir = "ci_dockerfile"
-#         d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
-#      end
       config.vm.define "build" do |d|
         d.vm.provider "docker" do |d|
           d.remains_running = false
@@ -62,11 +54,6 @@ Vagrant.configure("2") do |config|
             d1.ports = ["801:80"]
           end
         end
-#        config.vm.provider "docker" do |d1|
-#          d1.name = "node1"
-#          d1.image = "quay.io/tomaszgaska/spa:latest"
-#          d1.ports = ["801:80"]
-#        end
       elsif instancesParameter == '2'
         config.vm.define "d1" do |d1|
           d1.vm.provider "docker" do |d1|
@@ -81,17 +68,14 @@ Vagrant.configure("2") do |config|
           end
         end
 
-#        config.vm.provider "docker" do |d1|
-#          d1.name = "node1"
-#          d1.image = "quay.io/tomaszgaska/spa:latest"
-#          d1.ports = ["801:80"]
-#        end
-#        config.vm.provider "docker" do |d2|
-#          d2.name = "node2"
-#          d2.image = "quay.io/tomaszgaska/spa:latest"
-#          d2.ports = ["802:80"]
-#        end
       elsif instancesParameter == '3'
+        config.vm.define "haproxy" do |proxy|
+          proxy.vm.provider "docker" do |proxy|
+            proxy.build_dir = "proxy_dockerfile"
+            proxy.ports = ["9999:9999"]
+            proxy.create_args = ["--network", "host"]
+          end
+        end
         config.vm.define "d1" do |d1|
           d1.vm.provider "docker" do |d1|
             d1.image = "quay.io/tomaszgaska/spa:latest"
@@ -112,23 +96,6 @@ Vagrant.configure("2") do |config|
         end
       end
    end
-
-
-#        config.vm.provider "docker" do |d1|
-#          d1.image = "quay.io/tomaszgaska/spa:latest"
-#          d1.ports = ["801:80"]
-#        end
-#        config.vm.provider "docker" do |d2|
-#          d2.image = "quay.io/tomaszgaska/spa:latest"
-#          d2.ports = ["802:80"]
-#        end
-#        config.vm.provider "docker" do |d3|
-#          d3.image = "quay.io/tomaszgaska/spa:latest"
-#          d3.ports = ["803:80"]
-#        end
-#  config.vm.profider "docker" do |d|
-#     d.build_dir = "start_dockerfile"
-#  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

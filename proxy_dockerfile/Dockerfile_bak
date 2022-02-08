@@ -1,0 +1,35 @@
+FROM ubuntu:latest
+
+CMD /etc/init.d/haproxy start
+
+RUN apt-get update
+
+RUN apt-get install -y git
+
+RUN apt-get install -y curl
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -yq tzdata && \
+    ln -fs /usr/share/zoneinfo/Europe/Warsaw /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+RUN apt install -y --no-install-recommends software-properties-common && \
+    add-apt-repository ppa:vbernat/haproxy-2.4 -y && \
+    apt install -y haproxy=2.4.\*
+
+RUN apt-get install -y curl
+
+RUN echo "frontend balancer" >> /etc/haproxy/haproxy.cfg && \
+    echo "   bind *:8888" >> /etc/haproxy/haproxy.cfg && \
+    echo "   option forwardfor" >> /etc/haproxy/haproxy.cfg && \
+    echo "   default_backend webservers" >> /etc/haproxy/haproxy.cfg && \
+    echo "backend webservers" >> /etc/haproxy/haproxy.cfg && \
+    echo "    balance roundrobin" >> /etc/haproxy/haproxy.cfg  && \
+    echo "    server webserver1 localhost:801 check" >> /etc/haproxy/haproxy.cfg  && \
+    echo "    server webserver2 localhost:802 check" >> /etc/haproxy/haproxy.cfg  && \
+    echo "    server webserver3 localhost:803 check" >> /etc/haproxy/haproxy.cfg  && \
+    echo "    option httpchk" >> /etc/haproxy/haproxy.cfg 
+
+RUN /etc/init.d/haproxy start
