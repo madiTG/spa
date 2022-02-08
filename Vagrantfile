@@ -5,16 +5,20 @@ require 'getoptlong'
 
 opts = GetoptLong.new(
   [ '--build', GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--deploy', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--instances', GetoptLong::OPTIONAL_ARGUMENT]
 )
 
 buildParameter=''
+deployParameter=''
 instancesParameter=''
 
 opts.each do |opt, arg|
   case opt
     when '--build'
       buildParameter=arg
+    when '--deploy'
+      deployParameter=arg
     when '--instances'
       instancesParameter=arg
   end
@@ -31,6 +35,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
+  puts buildParameter
   if buildParameter == 'true'
       config.vm.provider "docker" do |d|
 #    d.image = "nginx:latest"
@@ -39,15 +44,17 @@ Vagrant.configure("2") do |config|
          d.build_dir = "ci_dockerfile"
       end
   end
-  
-  i=0
-  while i < instancesParameter.to_i
-      puts i
-      config.vm.provider "docker" do |d|
-        d.image = "quay.io/tomaszgaska/spa:latest"
-        d.ports = ["80#{i}:80"]
+
+  if deployParameter == 'true'  
+      i=0
+      while i < instancesParameter.to_i
+          puts i
+          config.vm.provider "docker" do |d|
+            d.image = "quay.io/tomaszgaska/spa:latest"
+            d.ports = ["80#{i}:80"]
+          end
+          i=i+1
       end
-      i=i+1
   end
 #  config.vm.profider "docker" do |d|
 #     d.build_dir = "start_dockerfile"
