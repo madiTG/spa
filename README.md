@@ -38,9 +38,9 @@ odpowiednia opcja (z wyjątkiem token i instances) wyzwalana jest przy pomocy s�
 **vagrant --build=true --deploy=true --proxy=true --token=xyz --instances=(1|2|3) up**
 
 odpowiednio vagrant destroy, np jeśli postawiliśmy środowisko przy pomocy:  
-**vagrant --build=false --deploy==true --proxy=true --instances=2 --token=xyz up**
+**vagrant --build=false --deploy==true --proxy=true --instances=2 --token=xyz up**  
 to niszczymy je w następujący sposób:  
-**vagrant --build=false --deploy==true --proxy=true --instances=2 destroy  **
+**vagrant --build=false --deploy==true --proxy=true --instances=2 destroy  **  
 
 parametry:  
 build - uruchamia budowanie aplikacji  
