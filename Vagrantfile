@@ -29,6 +29,7 @@ end
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
+  config.vm.provider "docker"
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
@@ -36,27 +37,95 @@ Vagrant.configure("2") do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   if buildParameter == 'true'
-      config.vm.provider "docker" do |d|
-         d.remains_running = false
+#      config.vm.provider "docker" do |d|
+#         d.remains_running = false
 #    d.image = "nginx:latest"
 #    d.ports = ["8081:80"]
 #    d.name = "nginx-container"
-         d.build_dir = "ci_dockerfile"
-         d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
+#         d.build_dir = "ci_dockerfile"
+#         d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
+#      end
+      config.vm.define "build" do |d|
+        d.vm.provider "docker" do |d|
+          d.remains_running = false
+          d.build_dir = "ci_dockerfile"
+          d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
+        end
       end
   end
-
+  puts instancesParameter
   if deployParameter == 'true'  
-      i=0
-      while i < instancesParameter.to_i
-          puts i
-          config.vm.provider "docker" do |d|
-            d.image = "quay.io/tomaszgaska/spa:latest"
-            d.ports = ["80#{i}:80"]
+      if instancesParameter == '1'
+        config.vm.define "d1" do |d1|
+          d1.vm.provider "docker" do |d1|
+            d1.image = "quay.io/tomaszgaska/spa:latest"
+            d1.ports = ["801:80"]
           end
-          i=i+1
+        end
+#        config.vm.provider "docker" do |d1|
+#          d1.name = "node1"
+#          d1.image = "quay.io/tomaszgaska/spa:latest"
+#          d1.ports = ["801:80"]
+#        end
+      elsif instancesParameter == '2'
+        config.vm.define "d1" do |d1|
+          d1.vm.provider "docker" do |d1|
+            d1.image = "quay.io/tomaszgaska/spa:latest"
+            d1.ports = ["801:80"]
+          end
+        end
+        config.vm.define "d2" do |d2|
+          d2.vm.provider "docker" do |d2|
+            d2.image = "quay.io/tomaszgaska/spa:latest"
+            d2.ports = ["802:80"]
+          end
+        end
+
+#        config.vm.provider "docker" do |d1|
+#          d1.name = "node1"
+#          d1.image = "quay.io/tomaszgaska/spa:latest"
+#          d1.ports = ["801:80"]
+#        end
+#        config.vm.provider "docker" do |d2|
+#          d2.name = "node2"
+#          d2.image = "quay.io/tomaszgaska/spa:latest"
+#          d2.ports = ["802:80"]
+#        end
+      elsif instancesParameter == '3'
+        config.vm.define "d1" do |d1|
+          d1.vm.provider "docker" do |d1|
+            d1.image = "quay.io/tomaszgaska/spa:latest"
+            d1.ports = ["801:80"]
+          end
+        end
+        config.vm.define "d2" do |d2|
+          d2.vm.provider "docker" do |d2|
+            d2.image = "quay.io/tomaszgaska/spa:latest"
+            d2.ports = ["802:80"]
+          end
+        end
+        config.vm.define "d3" do |d3|
+          d3.vm.provider "docker" do |d3|
+            d3.image = "quay.io/tomaszgaska/spa:latest"
+            d3.ports = ["803:80"]
+          end
+        end
       end
-  end
+   end
+
+
+#        config.vm.provider "docker" do |d1|
+#          d1.image = "quay.io/tomaszgaska/spa:latest"
+#          d1.ports = ["801:80"]
+#        end
+#        config.vm.provider "docker" do |d2|
+#          d2.image = "quay.io/tomaszgaska/spa:latest"
+#          d2.ports = ["802:80"]
+#        end
+#        config.vm.provider "docker" do |d3|
+#          d3.image = "quay.io/tomaszgaska/spa:latest"
+#          d3.ports = ["803:80"]
+#        end
 #  config.vm.profider "docker" do |d|
 #     d.build_dir = "start_dockerfile"
 #  end
