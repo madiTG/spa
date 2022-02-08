@@ -46,8 +46,8 @@ parametry:
 **build** - uruchamia budowanie aplikacji  
 **deploy** - uruchamia deployment kontenerów z repozytorium  
 **proxy** - uruchamia budowanie kontenera z haproxy  
-**token** - token do githuba (można także wyeksportować go w workspace poleceniem export GITHUB_ACCESS_TOKEN=ghp_rF2...)
-**instances** - liczba instancji nginx (od 1 do 3)
+**token** - token do githuba (można także wyeksportować go w workspace poleceniem export GITHUB_ACCESS_TOKEN=ghp_rF2...)  
+**instances** - liczba instancji nginx (od 1 do 3)  
 
 klonowanie repo:  
 
