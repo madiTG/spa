@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   if buildParameter == 'true'
       config.vm.provider "docker" do |d|
+         d.remains_running = false
 #    d.image = "nginx:latest"
 #    d.ports = ["8081:80"]
 #    d.name = "nginx-container"
