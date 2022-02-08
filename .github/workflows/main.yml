@@ -27,7 +27,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install prereqs
         env:
-          TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_ACCESS_TOKEN: ${{ secrets.TOKEN }}
         run: |
           curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
