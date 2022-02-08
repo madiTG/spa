@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Opis działania
 
-![alt text](https://https://github.com/madiTG/spa/edit/main/Diagram1.png)
+![Diagram rozwiązania](https://github.com/madiTG/spa/blob/main/Diagram1.png)
 
 Budowanie aplikacji można inicjować z trzech miejsc, bezpośrednio z GitHuba (Actions), automatycznie po wykonaniu push na branch main lub z przestrzeni roboczej po sklonowaniu repozytorium przy pomocy narzędzia vagrant. Budowanie odbywa się w przygotowanym obrazie dockera (**ci_dockerfile/Dockerfile**) opartym na ubuntu. Tworzenie obrazu wywoływane jest poprzez wykonanie komendy vagrant up. Efektem budowania jest utowrzenie w repozytorium brancha np. build_1515010122. Po utworzeniu brancha uruchamiany jest webhook do procesu w repozytorium Quay. Ściąga ono danego brancha i uruchamia budowanie obrazu z **cd_image/Dockerfile** - kopiuje zbudowane pliki do obrazu opartego na nginx. Na hoście na którym chcemy umieścić środowisko klonujemy repozytorium i uruchamiamy narzędzie vagrant z odpowiednimi opcjami do utowrzenia kontenera z haproxy (budowane z **proxy_dockerfile/Dockerfile**) i obrazów z serwerami www ze zbudowaną aplikacją (od 1 do 3), quay.io/tomaszgaska/spa:latest.  
 
