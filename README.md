@@ -40,16 +40,16 @@ odpowiednia opcja (z wyjątkiem token i instances) wyzwalana jest przy pomocy s�
 odpowiednio vagrant destroy, np jeśli postawiliśmy środowisko przy pomocy:  
 **vagrant --build=false --deploy==true --proxy=true --instances=2 --token=xyz up**  
 to niszczymy je w następujący sposób:  
-**vagrant --build=false --deploy==true --proxy=true --instances=2 destroy  **  
+**vagrant --build=false --deploy==true --proxy=true --instances=2 destroy**  
 
 parametry:  
-build - uruchamia budowanie aplikacji  
-deploy - uruchamia deployment kontenerów z repozytorium  
-proxy - uruchamia budowanie kontenera z haproxy  
-token - token do githuba (można także wyeksportować go w workspace poleceniem export GITHUB_ACCESS_TOKEN=ghp_rF2...)
-instance - liczba instancji nginx (od 1 do 3)
+**build** - uruchamia budowanie aplikacji  
+**deploy** - uruchamia deployment kontenerów z repozytorium  
+**proxy** - uruchamia budowanie kontenera z haproxy  
+**token** - token do githuba (można także wyeksportować go w workspace poleceniem export GITHUB_ACCESS_TOKEN=ghp_rF2...)
+**instances** - liczba instancji nginx (od 1 do 3)
 
 klonowanie repo:  
 
-**git clone https://github.com/madiTG/spa.git
+**git clone https://github.com/madiTG/spa.git**
 
