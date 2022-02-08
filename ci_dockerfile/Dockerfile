@@ -30,7 +30,7 @@ RUN cd spa && npm install && npm install -g @angular/cli@9.1.15 && npm audit fix
 RUN cd spa && \
     git config --global user.email "tomasz.gaska@gmail.com" && \
     git config --global user.name "Tomasz Gaska" && \
-    git checkout -b build_`date +"%H%M%d%m%y"` && mv dist build && git add build* --all && git commit -m "build `date`" && git push https://token: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@github.com/madiTG/spa.git
+    git checkout -b build_`date +"%H%M%d%m%y"` && mv dist build && git add build* --all && git commit -m "build `date`" && git push https://token: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@github.com/madiTG/spa.git
 
 
 
