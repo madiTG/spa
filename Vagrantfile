@@ -6,11 +6,15 @@ require 'getoptlong'
 opts = GetoptLong.new(
   [ '--build', GetoptLong::OPTIONAL_ARGUMENT ],
   [ '--deploy', GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--proxy', GetoptLong::OPTIONAL_ARGUMENT],
+  [ '--token', GetoptLong::OPTIONAL_ARGUMENT],
   [ '--instances', GetoptLong::OPTIONAL_ARGUMENT]
 )
 
 buildParameter=''
 deployParameter=''
+proxyParameter=''
+tokenParameter=ENV['GITHUB_ACCESS_TOKEN']
 instancesParameter=''
 
 opts.each do |opt, arg|
@@ -19,6 +23,10 @@ opts.each do |opt, arg|
       buildParameter=arg
     when '--deploy'
       deployParameter=arg
+    when '--proxy'
+      proxyParameter=arg
+    when '--token'
+      tokenParameter=arg
     when '--instances'
       instancesParameter=arg
   end
@@ -41,11 +49,21 @@ Vagrant.configure("2") do |config|
         d.vm.provider "docker" do |d|
           d.remains_running = false
           d.build_dir = "ci_dockerfile"
-          d.build_args = ["--build-arg", "TOKEN="+ENV['GITHUB_ACCESS_TOKEN']]
+          d.build_args = ["--build-arg", "TOKEN="+tokenParameter]
         end
       end
   end
-  puts instancesParameter
+
+  if proxyParameter == 'true'
+     config.vm.define "haproxy" do |proxy|
+       proxy.vm.provider "docker" do |proxy|
+         proxy.build_dir = "proxy_dockerfile"
+         proxy.ports = ["9999:9999"]
+         proxy.build_args = ["-t", "haproxy:only"]
+         proxy.create_args = ["--network", "host"]
+       end
+     end
+  end
   if deployParameter == 'true'  
       if instancesParameter == '1'
         config.vm.define "d1" do |d1|
@@ -69,13 +87,6 @@ Vagrant.configure("2") do |config|
         end
 
       elsif instancesParameter == '3'
-        config.vm.define "haproxy" do |proxy|
-          proxy.vm.provider "docker" do |proxy|
-            proxy.build_dir = "proxy_dockerfile"
-            proxy.ports = ["9999:9999"]
-            proxy.create_args = ["--network", "host"]
-          end
-        end
         config.vm.define "d1" do |d1|
           d1.vm.provider "docker" do |d1|
             d1.image = "quay.io/tomaszgaska/spa:latest"
