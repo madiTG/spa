@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "hello-spa"
+    }
+  },
+  "defaultProject": "hello-spa",
+  "cli": {
+    "analytics": false
+  }
 }

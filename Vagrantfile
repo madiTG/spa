@@ -12,7 +12,7 @@ opts = GetoptLong.new(
 )
 
 buildParameter=''
-deployParameter=''
+deployParameter='1'
 proxyParameter=''
 tokenParameter=ENV['GITHUB_ACCESS_TOKEN']
 instancesParameter=''

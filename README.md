@@ -53,3 +53,4 @@ klonowanie repo:
 
 **git clone https://github.com/madiTG/spa.git**
 
+Aplikacja dostępna jest na porcie 9999 przez haproxy i na portach 801, 802, 803 - poszczególne instancje.  
