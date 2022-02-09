@@ -42,6 +42,8 @@ odpowiednio vagrant destroy, np jeśli postawiliśmy środowisko przy pomocy:
 to niszczymy je w następujący sposób:  
 **vagrant --build=false --deploy==true --proxy=true --instances=2 destroy**  
 
+UWAGA: poszczególne kroki (build,proxy,deploy) wykonujemy osobno, bo Vagrant.  
+
 parametry:  
 **build** - uruchamia budowanie aplikacji  
 **deploy** - uruchamia deployment kontenerów z repozytorium  
@@ -54,3 +56,8 @@ klonowanie repo:
 **git clone https://github.com/madiTG/spa.git**
 
 Aplikacja dostępna jest na porcie 9999 przez haproxy i na portach 801, 802, 803 - poszczególne instancje.  
+
+Dodatkowe pliki: 
+
+.github/workflows/main.yml - plik zawiera instrukcje dla GitHub Actions  
+proxy_dockerfile/haproxy.cfg - konfiguracja haproxy  
