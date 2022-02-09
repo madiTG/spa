@@ -42,7 +42,7 @@ odpowiednio vagrant destroy, np jeśli postawiliśmy środowisko przy pomocy:
 to niszczymy je w następujący sposób:  
 **vagrant --build=false --deploy==true --proxy=true --instances=2 destroy**  
 
-UWAGA: poszczególne kroki (build,proxy,deploy) wykonujemy osobno, bo Vagrant.  
+**UWAGA:** poszczególne kroki (build,proxy,deploy) wykonujemy osobno, bo Vagrant.  
 
 parametry:  
 **build** - uruchamia budowanie aplikacji  
