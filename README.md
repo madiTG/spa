@@ -61,3 +61,5 @@ Dodatkowe pliki:
 
 .github/workflows/main.yml - plik zawiera instrukcje dla GitHub Actions  
 proxy_dockerfile/haproxy.cfg - konfiguracja haproxy  
+
+Do uruchomienia w środowisku corpo export GIT_SSL_NO_VERIFY=1 do ci_dockerfile/Dockerfile  
